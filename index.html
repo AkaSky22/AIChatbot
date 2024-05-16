@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aakash and GuruKiran - Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    p {
+      margin-bottom: 20px;
+      color: #666;
+    }
+    .contact-form {
+      margin-top: 30px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-group textarea {
+      height: 100px;
+    }
+    .form-group button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #666;
+    }
+    /* Chatbot styles */
+    #chat-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #chat-box {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    #user-input {
+      width: calc(100% - 70px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+    }
+    button {
+      width: 70px;
+      padding: 10px;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>InfiniBot</h1>
+    <p>Welcome to our modern chatbot! Feel free to interact with us.</p>
+    <div class="contact-form">
+      <h2>Contact Us</h2>
+      <form action="#" method="POST">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chatbot container -->
+  <div id="chat-container">
+    <div id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <div class="footer">
+    <p>Developed by Aakash and GuruKiran</p>
+  </div>
+
+  <script>
+    // Function to send user message to Dialogflow and display response
+    function sendMessage() {
+      var userInput = document.getElementById("user-input").value;
+      var chatBox = document.getElementById("chat-box");
+
+      // Display user message in chat box
+      chatBox.innerHTML += "<div>User: " + userInput + "</div>";
+
+      // Send user message to Dialogflow
+      fetch('/dialogflow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: userInput })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Display bot response in chat box
+        chatBox.innerHTML += "<div>Bot: " + data.message + "</div>";
+        // Scroll to bottom of chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
+      })
+      .catch(error => console.error('Error:', error));
+
+      // Clear user input field
+      document.getElementById("user-input").value = "";
+    }
+  </script>
+</body>
+</html>
+```
